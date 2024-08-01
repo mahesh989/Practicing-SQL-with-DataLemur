@@ -79,6 +79,9 @@ Assume you're given the following tables:
 
 Write a query to return the IDs of the Facebook pages that have zero likes. The output should be sorted in ascending order based on the page IDs.
 
+For the complete question, [click here](https://datalemur.com/questions/sql-page-with-no-likes).
+
+
 ### SQL Code:
 ```sql
 SELECT
