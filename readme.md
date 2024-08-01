@@ -94,3 +94,27 @@ WHERE
   pl.page_id IS NULL
 ORDER BY
   p.page_id ASC;
+```
+
+
+## Tesla Unfinished Parts [Tesla SQL Interview Question]
+
+Write a query to determine which parts have begun the assembly process but are not yet finished.
+
+**parts_assembly Table:**
+- `part` (string)
+- `finish_date` (datetime)
+- `assembly_step` (integer)
+
+For the complete question, [click here](https://datalemur.com/questions/tesla-unfinished-parts).
+
+### SQL Code:
+```sql
+SELECT 
+  part, 
+  assembly_step
+FROM 
+  parts_assembly
+WHERE 
+  finish_date IS NULL;
+```
