@@ -64,3 +64,30 @@ ORDER BY
     candidate_id; 
 ```
 
+## Page With No Likes [Facebook SQL Interview Question]
+
+Assume you're given the following tables:
+
+**pages Table:**
+- `page_id` (integer)
+- `page_name` (varchar)
+
+**page_likes Table:**
+- `user_id` (integer)
+- `page_id` (integer)
+- `liked_date` (datetime)
+
+Write a query to return the IDs of the Facebook pages that have zero likes. The output should be sorted in ascending order based on the page IDs.
+
+### SQL Code:
+```sql
+SELECT
+  p.page_id
+FROM
+  pages p
+LEFT JOIN
+  page_likes pl ON p.page_id = pl.page_id
+WHERE
+  pl.page_id IS NULL
+ORDER BY
+  p.page_id ASC;
