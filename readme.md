@@ -147,3 +147,41 @@ SELECT
   SUM(CASE WHEN device_type IN ('tablet', 'phone') THEN each_count ELSE 0 END) AS mobile_views
 FROM 
   viewer_ship;
+```
+
+
+## Average Post Hiatus (Part 1) [Facebook SQL Interview Question]
+
+**Description**  
+Given a table of Facebook posts, for each user who posted at least twice in 2021, write a query to find the number of days between each user’s first post of the year and last post of the year in 2021. Output the user and the number of days between each user's first and last post.
+
+**posts Table**
+
+- `user_id` (integer)
+- `post_id` (integer)
+- `post_content` (text)
+- `post_date` (timestamp)
+
+**SQL Code:**
+
+```sql
+WITH number_of_day AS (
+  SELECT 
+    user_id, 
+    MIN(post_date) AS first_date, 
+    MAX(post_date) AS last_date
+  FROM 
+    posts
+  WHERE 
+    date_part('year', post_date) = 2021
+  GROUP BY 
+    user_id
+)
+SELECT 
+  user_id,
+  date_part('day', last_date - first_date) AS days_between
+FROM 
+  number_of_day
+WHERE 
+  date_part('day', last_date - first_date) > 0;
+```
