@@ -118,3 +118,32 @@ FROM
 WHERE 
   finish_date IS NULL;
 ```
+
+## New York Times [SQL Interview Question]
+
+Assume you're given the table on user viewership categorized by device type where the device types include laptop, tablet, phone, and tv.
+
+Write a query that calculates the total viewership for laptops and mobile devices, where mobile is defined as the sum of tablet and phone viewership. Output the total viewership for laptops as `laptop_views` and the total viewership for mobile devices as `mobile_views`.
+
+**viewership Table:**
+- `device_type` (string)
+- `viewership_count` (integer)
+
+For the complete question, [click here](https://datalemur.com/questions/laptop-mobile-viewership).
+
+### SQL Code:
+```sql
+WITH viewer_ship AS (
+  SELECT 
+    device_type,
+    COUNT(*) AS each_count
+  FROM 
+    viewership
+  GROUP BY 
+    device_type
+)
+SELECT 
+  SUM(CASE WHEN device_type = 'laptop' THEN each_count ELSE 0 END) AS laptop_views,
+  SUM(CASE WHEN device_type IN ('tablet', 'phone') THEN each_count ELSE 0 END) AS mobile_views
+FROM 
+  viewer_ship;
