@@ -162,6 +162,8 @@ Given a table of Facebook posts, for each user who posted at least twice in 2021
 - `post_content` (text)
 - `post_date` (timestamp)
 
+For the complete question, [click here](https://datalemur.com/questions/sql-average-post-hiatus-1).
+
 **SQL Code:**
 
 ```sql
@@ -184,4 +186,76 @@ FROM
   number_of_day
 WHERE 
   date_part('day', last_date - first_date) > 0;
+```
+
+
+## Teams Power Users [Microsoft SQL Interview Question]
+
+**Description**  
+Write a query to identify the top 2 Power Users who sent the highest number of messages on Microsoft Teams in August 2022. Display the IDs of these 2 users along with the total number of messages they sent. Output the results in descending order based on the count of the messages.
+
+**messages Table**
+
+- `message_id` (integer)
+- `sender_id` (integer)
+- `receiver_id` (integer)
+- `content` (varchar)
+- `sent_date` (datetime)
+
+For the complete question, [click here](https://datalemur.com/questions/tesla-unfinished-parts).
+
+**SQL Code:**
+
+```sql
+SELECT 
+  sender_id, 
+  COUNT(sender_id) AS count_messages
+FROM 
+  messages
+WHERE 
+  date_part('year', sent_date) = 2022
+  AND date_part('month', sent_date) = 8
+GROUP BY 
+  sender_id
+ORDER BY 
+  count_messages DESC
+LIMIT 2;
+```
+
+
+## Duplicate Job Listings [LinkedIn SQL Interview Question]
+
+**Description**  
+Assume you're given a table containing job postings from various companies on the LinkedIn platform. Write a query to retrieve the count of companies that have posted duplicate job listings.
+
+**Definition:**  
+Duplicate job listings are defined as two job listings within the same company that share identical titles and descriptions.
+
+**job_listings Table**
+
+- `job_id` (integer)
+- `company_id` (integer)
+- `title` (string)
+- `description` (string)
+
+**For the complete question: [click here](https://datalemur.com/questions/duplicate-job-listings)**
+
+**SQL Code:**
+
+```sql
+WITH duplicate_companies AS (
+  SELECT 
+    company_id,
+    COUNT(*) AS duplicate_count
+  FROM 
+    job_listings
+  GROUP BY 
+    company_id, title, description
+  HAVING 
+    COUNT(*) > 1
+)
+SELECT 
+  COUNT(DISTINCT company_id) AS duplicate_companies
+FROM 
+  duplicate_companies;
 ```
