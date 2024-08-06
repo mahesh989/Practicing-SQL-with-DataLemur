@@ -310,3 +310,36 @@ ORDER BY
   total_orders DESC
 LIMIT 3;
 ```
+
+
+## Average Review Ratings [Amazon SQL Interview Question]
+
+**Description**  
+Given the reviews table, write a query to retrieve the average star rating for each product, grouped by month. The output should display the month as a numerical value, product ID, and average star rating rounded to two decimal places. Sort the output first by month and then by product ID.
+
+**reviews Table**
+
+- `review_id` (integer)
+- `user_id` (integer)
+- `submit_date` (datetime)
+- `product_id` (integer)
+- `stars` (integer: 1-5)
+
+**For the complete question, click here: [Average Review Ratings](https://datalemur.com/questions/sql-avg-review-ratings)**
+
+**SQL Code:**
+
+```sql
+SELECT
+  date_part('month', submit_date) AS mth,
+  product_id AS product,
+  ROUND(AVG(stars), 2) AS avg_rating
+FROM 
+  reviews
+GROUP BY 
+  product_id,
+  date_part('month', submit_date)
+ORDER BY 
+  mth,
+  product_id;
+```
